@@ -6,12 +6,52 @@
     <title>QR Code - Générateur et Scanner</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; margin: 20px; }
-        input, button { padding: 10px; margin: 10px; font-size: 16px; }
-        button { cursor: pointer; }
-        #qrcode { margin-top: 20px; }
-        #imageDisplay { margin-top: 20px; }
-        img { max-width: 1080px; }
+        body { 
+            font-family: Arial, sans-serif; 
+            text-align: center; 
+            margin: 20px; 
+        }
+        input, button { 
+            padding: 10px; 
+            margin: 10px; 
+            font-size: 16px; 
+        }
+        button { 
+            cursor: pointer; 
+        }
+        #qrcode { 
+            margin-top: 20px; 
+        }
+        #imageDisplay { 
+            margin-top: 20px; 
+            width: 90%; 
+            max-width: 800px; /* Maximum width for larger screens */
+            margin-left: auto; 
+            margin-right: auto; 
+        }
+        iframe { 
+            width: 100%; 
+            height: 60vh; /* Responsive height based on viewport height */
+            border: 2px solid #ccc; /* Optional: Add a border */
+            border-radius: 10px; /* Optional: Rounded corners */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Optional: Add a shadow */
+        }
+
+        /* Responsive adjustments for smaller screens */
+        @media (max-width: 768px) {
+            iframe {
+                height: 50vh; /* Smaller height for mobile devices */
+            }
+            #imageDisplay {
+                width: 95%; /* Slightly wider on smaller screens */
+            }
+        }
+
+        @media (max-width: 480px) {
+            iframe {
+                height: 40vh; /* Even smaller height for very small devices */
+            }
+        }
     </style>
 </head>
 <body>
@@ -24,11 +64,12 @@
         <div id="qrcode"></div>
     </div>
 
-    <!-- Section Affichage du nom et image après scan -->
+    <!-- Section Affichage du nom et iframe après scan -->
     <div id="scanner" style="display: none;">
         <h2 id="displayName">Chargement...</h2>
         <div id="imageDisplay">
-            <img id="scannedImage" src="Black and Gold Modern Prom Night Poster.jpg" alt="Image associée">
+            <!-- Embed the Canva design using an iframe -->
+            <iframe id="scannedIframe" src="Black and Gold Modern Prom Night Poster.jpg" allowfullscreen></iframe>
         </div>
     </div>
 
@@ -63,22 +104,22 @@
             console.log("QR Code généré avec l'URL : " + url);
         }
 
-        // Fonction qui vérifie si un nom est dans l'URL et affiche le nom et l'image
+        // Fonction qui vérifie si un nom est dans l'URL et affiche le nom et l'iframe
         function checkForScannedName() {
             let name = getQueryParam("name");
             if (name) {
                 // Masquer la section de génération du QR Code
                 document.getElementById("generator").style.display = "none";
                 
-                // Afficher la section de nom et image après scan
+                // Afficher la section de nom et iframe après scan
                 document.getElementById("scanner").style.display = "block";
 
                 // Afficher le nom correctement décodé
                 document.getElementById("displayName").innerText = "Nom : " + decodeURIComponent(name);
-                
-                // Afficher une image commune pour tout le monde
-                let imageUrl = "Black and Gold Modern Prom Night Poster.jpg"; // Remplacez cette URL par l'image de votre choix
-                document.getElementById("scannedImage").src = imageUrl;
+
+                // Afficher l'iframe avec le design Canva
+                let iframe = document.getElementById("scannedIframe");
+                iframe.src = "Black and Gold Modern Prom Night Poster.jpg";
             }
         }
 
@@ -88,3 +129,4 @@
 
 </body>
 </html>
+
