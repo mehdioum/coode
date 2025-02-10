@@ -9,7 +9,14 @@
         body { 
             font-family: Arial, sans-serif; 
             text-align: center; 
-            margin: 20px; 
+            margin: 0; 
+            padding: 20px; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            min-height: 100vh; /* Full viewport height */
+            box-sizing: border-box; 
         }
         input, button { 
             padding: 10px; 
@@ -28,10 +35,14 @@
             max-width: 800px; /* Maximum width for larger screens */
             margin-left: auto; 
             margin-right: auto; 
+            flex-grow: 1; /* Allow it to grow and fill available space */
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
         }
         iframe { 
             width: 100%; 
-            height: 60vh; /* Responsive height based on viewport height */
+            height: 70vh; /* Responsive height based on viewport height */
             border: 2px solid #ccc; /* Optional: Add a border */
             border-radius: 10px; /* Optional: Rounded corners */
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Optional: Add a shadow */
@@ -40,16 +51,16 @@
         /* Responsive adjustments for smaller screens */
         @media (max-width: 768px) {
             iframe {
-                height: 50vh; /* Smaller height for mobile devices */
-            }
-            #imageDisplay {
-                width: 95%; /* Slightly wider on smaller screens */
+                height: 60vh; /* Slightly smaller height for tablets */
             }
         }
 
         @media (max-width: 480px) {
             iframe {
-                height: 40vh; /* Even smaller height for very small devices */
+                height: 50vh; /* Even smaller height for mobile phones */
+            }
+            body {
+                padding: 10px; /* Reduce padding for very small screens */
             }
         }
     </style>
@@ -69,7 +80,7 @@
         <h2 id="displayName">Chargement...</h2>
         <div id="imageDisplay">
             <!-- Embed the Canva design using an iframe -->
-            <iframe id="scannedIframe" src="Black and Gold Modern Prom Night Poster.jpg" allowfullscreen></iframe>
+            <iframe id="scannedIframe" src="" allowfullscreen></iframe>
         </div>
     </div>
 
@@ -119,7 +130,7 @@
 
                 // Afficher l'iframe avec le design Canva
                 let iframe = document.getElementById("scannedIframe");
-                iframe.src = "Black and Gold Modern Prom Night Poster.jpg";
+                iframe.src = "https://www.canva.com/design/DAGdlECX7nY/R9T_x33DQXUHWMEvRDbQNQ/view?embed";
             }
         }
 
