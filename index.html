@@ -33,15 +33,29 @@
     </div>
 
     <script>
-// hna fin tzid ga4 smiyat li baghi testi biya ob oualid 
-        const allowedNames = ["yasser boudad", "mohammed oualid moumni"]; 
-
+        // Normalized list of allowed names (trimmed and lowercase)
+        const allowedNames = [
+            "issiali rime", "oumokhtar mehdi", "mezouari alae", "malek aymane", "houadi youssef", 
+            "abderahmani anas", "merzouk houda", "eljabri fatema zohra", "benzerga hiba", 
+            "zaydane maysa", "berriah sara", "yacoubi nouhaila", "hamdani aya", "miri doha", 
+            "msaad yasmine", "kissi mayssae", "nassri youssef", "attalah ibrahim", 
+            "sedase mehdi", "quassouh oussama", "bougdal marwan", "hocni rayan", 
+            "kerfati rayan", "hedouche reda", "mekkaoui inji", "nkhili rim", 
+            "louhibi dalila", "bouchnaif meryem", "el bouchikhi malak", "houssam ouariti", 
+            "rayane tirinsi", "amine lamrini", "ziani ahmed amine", "bioui yassine", 
+            "bouchikhi oussama", "bouaaza yasmine", "nessah manal", "el mir haytem", 
+            "mzara haitam", "adam belmamoun", "rahhou soulaf", "maamri aya", 
+            "chbili ranya", "bentaleb salah", "chater amine", "kejiou niama", 
+            "zahraoui younes", "mekkaoui chahd", "hamzaoui abir", "rguig soulaf", 
+            "mimouni ayoub", "berkani zakaria", "el bilaly mohammed", "lazaar douae", 
+            "jebbar rania", "abaran aya", "flla ibtihal", "bitari hala", 
+            "ayach hafsa", "hanane mojahid", "daoudi dina"
+        ].map(name => name.trim().toLowerCase()); // Ensure all names are trimmed and lowercase
 
         function getQueryParam(param) {
             let params = new URLSearchParams(window.location.search);
             return params.get(param);
         }
-
 
         function generateQRCode() {
             let name = document.getElementById("nameInput").value.trim();
@@ -50,18 +64,17 @@
                 return;
             }
 
+            // Normalize the input name for comparison
+            let normalizedInputName = name.toLowerCase();
 
-            if (!allowedNames.includes(name.toLowerCase())) {
+            if (!allowedNames.includes(normalizedInputName)) {
                 alert("Nom non autorisé !");
                 return;
             }
 
-
             let url = window.location.href.split('?')[0] + "?name=" + encodeURIComponent(name);
 
-
             document.getElementById("qrcode").innerHTML = "";
-
 
             new QRCode(document.getElementById("qrcode"), {
                 text: url,
@@ -72,23 +85,16 @@
             console.log("QR Code généré avec l'URL : " + url);
         }
 
-
         function checkForScannedName() {
             let name = getQueryParam("name");
             if (name) {
+                // Normalize the name from the URL
+                let normalizedScannedName = decodeURIComponent(name).toLowerCase();
 
-                name = decodeURIComponent(name);
-
-
-                if (allowedNames.includes(name.toLowerCase())) {
-
+                if (allowedNames.includes(normalizedScannedName)) {
                     document.getElementById("generator").style.display = "none";
-
                     document.getElementById("scanner").style.display = "block";
-
-
                     document.getElementById("displayName").innerText = "Nom : " + name;
-
 
                     let imageUrl = "Black and Gold Modern Prom Night Poster.jpg"; 
                     document.getElementById("scannedImage").src = imageUrl;
